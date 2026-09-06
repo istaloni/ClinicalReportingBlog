@@ -161,7 +161,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Below is an interactive clinical data explorer loading your local <code>adsl.csv</code> dataset directly in your browser via WebAssembly (Shinylive):</p>
+<p>Below is an interactive clinical data explorer fetching your pushed <code>adsl.csv</code> dataset directly from GitHub via WebAssembly (Shinylive):</p>
 <pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
@@ -172,8 +172,9 @@ ul.task-list li input[type="checkbox"] {
 library(shiny)
 library(bslib)
 
-# 1. Read local CSV file copied by Quarto
-adsl &lt;- read.csv("adsl.csv", stringsAsFactors = FALSE)
+# 1. Fetch CSV directly from your public GitHub repository
+csv_url &lt;- "[https://raw.githubusercontent.com/istaloni/ClinicalReportingBlog/main/posts/ADSL/adsl.csv](https://raw.githubusercontent.com/istaloni/ClinicalReportingBlog/main/posts/ADSL/adsl.csv)"
+adsl &lt;- read.csv(url(csv_url), stringsAsFactors = FALSE)
 
 # 2. UI Definition
 ui &lt;- page_sidebar(
@@ -185,19 +186,15 @@ ui &lt;- page_sidebar(
     selectInput("cat_var", "Grouping Variable:", 
                 choices = c("Treatment Arm" = "ARM", "Sex" = "SEX", 
                             "Race" = "RACE", "Site" = "SITEID")),
-    sliderInput("bins", "Histogram Bins:", min = 5, max = 30, value = 15),
-    checkboxInput("show_data", "Show Raw Data Table", value = TRUE)
+    sliderInput("bins", "Histogram Bins:", min = 5, max = 30, value = 15)
   ),
   card(
     card_header("Metric Distribution"),
     plotOutput("distPlot")
   ),
-  conditionalPanel(
-    condition = "input.show_data == true",
-    card(
-      card_header("Dataset Preview"),
-      tableOutput("dataTable")
-    )
+  card(
+    card_header("Dataset Preview"),
+    tableOutput("dataTable")
   )
 )
 

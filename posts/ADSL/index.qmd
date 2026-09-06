@@ -4,11 +4,9 @@ author: "Karl Marquez"
 date: "2026-09-06"
 categories: [Clinical, Shiny, CDISC]
 page-layout: full
-resources:
-  - adsl.csv
 ---
 
-Below is an interactive clinical data explorer loading your local `adsl.csv` dataset directly in your browser via WebAssembly (Shinylive):
+Below is an interactive clinical data explorer fetching your pushed `adsl.csv` dataset directly from GitHub via WebAssembly (Shinylive):
 
 ```{shinylive-r}
 #| standalone: true
@@ -18,8 +16,9 @@ Below is an interactive clinical data explorer loading your local `adsl.csv` dat
 library(shiny)
 library(bslib)
 
-# 1. Read local CSV file copied by Quarto
-adsl <- read.csv("adsl.csv", stringsAsFactors = FALSE)
+# 1. Fetch CSV directly from your public GitHub repository
+csv_url <- "[https://raw.githubusercontent.com/istaloni/ClinicalReportingBlog/main/posts/ADSL/adsl.csv](https://raw.githubusercontent.com/istaloni/ClinicalReportingBlog/main/posts/ADSL/adsl.csv)"
+adsl <- read.csv(url(csv_url), stringsAsFactors = FALSE)
 
 # 2. UI Definition
 ui <- page_sidebar(
@@ -31,19 +30,15 @@ ui <- page_sidebar(
     selectInput("cat_var", "Grouping Variable:", 
                 choices = c("Treatment Arm" = "ARM", "Sex" = "SEX", 
                             "Race" = "RACE", "Site" = "SITEID")),
-    sliderInput("bins", "Histogram Bins:", min = 5, max = 30, value = 15),
-    checkboxInput("show_data", "Show Raw Data Table", value = TRUE)
+    sliderInput("bins", "Histogram Bins:", min = 5, max = 30, value = 15)
   ),
   card(
     card_header("Metric Distribution"),
     plotOutput("distPlot")
   ),
-  conditionalPanel(
-    condition = "input.show_data == true",
-    card(
-      card_header("Dataset Preview"),
-      tableOutput("dataTable")
-    )
+  card(
+    card_header("Dataset Preview"),
+    tableOutput("dataTable")
   )
 )
 
