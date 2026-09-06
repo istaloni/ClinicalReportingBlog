@@ -1,0 +1,14 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "Clinical Reporting Blog"
+  navbar:
+    right:
+      - icon: github
+        href: https://github.com/istaloni/ClinicalReportingBlog
+
+format:
+  html:
+    theme: cosmo
