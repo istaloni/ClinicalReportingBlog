@@ -42,11 +42,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap-c1fac2584b48ed01fb6e278e36375074.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<meta name="shinylive:serviceworker_dir" content="../..">
-<script src="../../site_libs/quarto-contrib/shinylive-0.10.14/shinylive/load-shinylive-sw.js" type="module"></script>
-<script src="../../site_libs/quarto-contrib/shinylive-0.10.14/shinylive/run-python-blocks.js" type="module"></script>
-<link href="../../site_libs/quarto-contrib/shinylive-0.10.14/shinylive/shinylive.css" rel="stylesheet">
-<link href="../../site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -162,60 +157,8 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>Below is an interactive clinical data explorer fetching your pushed <code>adsl.csv</code> dataset directly from GitHub via WebAssembly (Shinylive):</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
-#| viewerHeight: 700
-#| viewerWidth: 100%
-
-library(shiny)
-library(bslib)
-
-# 1. Fetch CSV directly from your public GitHub repository
-csv_url &lt;- "[https://raw.githubusercontent.com/istaloni/ClinicalReportingBlog/main/posts/ADSL/adsl.csv](https://raw.githubusercontent.com/istaloni/ClinicalReportingBlog/main/posts/ADSL/adsl.csv)"
-adsl &lt;- read.csv(url(csv_url), stringsAsFactors = FALSE)
-
-# 2. UI Definition
-ui &lt;- page_sidebar(
-  title = "ADSL Subject Level Explorer",
-  sidebar = sidebar(
-    selectInput("num_var", "Numeric Variable:", 
-                choices = c("Age" = "AGE", "Baseline Height" = "HEIGHTBL", 
-                            "Baseline Weight" = "WEIGHTBL", "Baseline BMI" = "BMIBL")),
-    selectInput("cat_var", "Grouping Variable:", 
-                choices = c("Treatment Arm" = "ARM", "Sex" = "SEX", 
-                            "Race" = "RACE", "Site" = "SITEID")),
-    sliderInput("bins", "Histogram Bins:", min = 5, max = 30, value = 15)
-  ),
-  card(
-    card_header("Metric Distribution"),
-    plotOutput("distPlot")
-  ),
-  card(
-    card_header("Dataset Preview"),
-    tableOutput("dataTable")
-  )
-)
-
-# 3. Server Definition
-server &lt;- function(input, output, session) {
-  output$distPlot &lt;- renderPlot({
-    req(input$num_var)
-    val &lt;- as.numeric(adsl[[input$num_var]])
-    
-    hist(val, breaks = input$bins, col = "#2c3e50", border = "white",
-         xlab = input$num_var, 
-         main = paste("Distribution of", input$num_var, "by", input$cat_var))
-  })
-
-  output$dataTable &lt;- renderTable({
-    cols &lt;- intersect(c("USUBJID", input$cat_var, input$num_var, "SAFFL", "DTHFL"), names(adsl))
-    head(adsl[, cols], 10)
-  })
-}
-
-shinyApp(ui = ui, server = server)</code></pre>
+<iframe src="https://connect.posit.cloud/karl4marquez/content/01a077ee-3d71-a6e3-7f20-be8a6c4ffaca" width="100%" height="750px" style="border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+</iframe>
 
 
 
