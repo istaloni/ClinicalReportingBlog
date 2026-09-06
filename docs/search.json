@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "ClinicalReporting",
     "section": "",
-    "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
+    "text": "Introduction to Clinical Reporting\n\n\n\n\n\n\n\n\nSep 6, 2026\n\n\nKarl Marquez\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html#quarto",
@@ -47,5 +47,19 @@
     "title": "About",
     "section": "",
     "text": "Welcome to my Clinical Reporting Blog! Here I share insights, R tools, and data visualizations focused on clinical trial data and pharmaverse technologies."
+  },
+  {
+    "objectID": "firstpost.html",
+    "href": "firstpost.html",
+    "title": "Introduction to Clinical Reporting",
+    "section": "",
+    "text": "Welcome to my clinical reporting blog! In this post, I will explore clinical data transformation and reporting using R."
+  },
+  {
+    "objectID": "posts/firstpost/firstpost.html",
+    "href": "posts/firstpost/firstpost.html",
+    "title": "Introduction to Clinical Reporting",
+    "section": "",
+    "text": "Welcome to my clinical reporting blog! In this post, I will explore clinical data transformation and reporting using R."
   }
 ]

@@ -1,0 +1,8 @@
+---
+title: "Introduction to Clinical Reporting"
+author: "Karl Marquez"
+date: "2026-09-06"
+categories: [R, Pharmaverse, Clinical]
+---
+
+Welcome to my clinical reporting blog! In this post, I will explore clinical data transformation and reporting using R.
