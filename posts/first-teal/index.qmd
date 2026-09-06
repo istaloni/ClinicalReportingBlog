@@ -3,6 +3,7 @@ title: "Interactive Clinical Data Explorer"
 author: "Karl Marquez"
 date: "2026-09-06"
 categories: [Teal, R, Clinical]
+page-layout: full
 ---
 
 Below is an interactive clinical data explorer running directly in your browser via WebAssembly (Shinylive):
@@ -10,6 +11,7 @@ Below is an interactive clinical data explorer running directly in your browser 
 ```{shinylive-r}
 #| standalone: true
 #| viewerHeight: 650
+#| viewerWidth: 100%
 
 library(shiny)
 
