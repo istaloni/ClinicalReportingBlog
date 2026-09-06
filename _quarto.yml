@@ -5,6 +5,11 @@ project:
 website:
   title: "Clinical Reporting Blog"
   navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: about.qmd
+        text: About
     right:
       - icon: github
         href: https://github.com/istaloni/ClinicalReportingBlog
