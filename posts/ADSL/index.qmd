@@ -1,0 +1,68 @@
+---
+title: "Interactive ADSL Clinical Explorer"
+author: "Karl Marquez"
+date: "2026-09-06"
+categories: [Clinical, Shiny, CDISC]
+page-layout: full
+resources:
+  - adsl.csv
+---
+
+Below is an interactive clinical data explorer loading your local `adsl.csv` dataset directly in your browser via WebAssembly (Shinylive):
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 700
+#| viewerWidth: 100%
+
+library(shiny)
+library(bslib)
+
+# 1. Read local CSV file copied by Quarto
+adsl <- read.csv("adsl.csv", stringsAsFactors = FALSE)
+
+# 2. UI Definition
+ui <- page_sidebar(
+  title = "ADSL Subject Level Explorer",
+  sidebar = sidebar(
+    selectInput("num_var", "Numeric Variable:", 
+                choices = c("Age" = "AGE", "Baseline Height" = "HEIGHTBL", 
+                            "Baseline Weight" = "WEIGHTBL", "Baseline BMI" = "BMIBL")),
+    selectInput("cat_var", "Grouping Variable:", 
+                choices = c("Treatment Arm" = "ARM", "Sex" = "SEX", 
+                            "Race" = "RACE", "Site" = "SITEID")),
+    sliderInput("bins", "Histogram Bins:", min = 5, max = 30, value = 15),
+    checkboxInput("show_data", "Show Raw Data Table", value = TRUE)
+  ),
+  card(
+    card_header("Metric Distribution"),
+    plotOutput("distPlot")
+  ),
+  conditionalPanel(
+    condition = "input.show_data == true",
+    card(
+      card_header("Dataset Preview"),
+      tableOutput("dataTable")
+    )
+  )
+)
+
+# 3. Server Definition
+server <- function(input, output, session) {
+  output$distPlot <- renderPlot({
+    req(input$num_var)
+    val <- as.numeric(adsl[[input$num_var]])
+    
+    hist(val, breaks = input$bins, col = "#2c3e50", border = "white",
+         xlab = input$num_var, 
+         main = paste("Distribution of", input$num_var, "by", input$cat_var))
+  })
+
+  output$dataTable <- renderTable({
+    cols <- intersect(c("USUBJID", input$cat_var, input$num_var, "SAFFL", "DTHFL"), names(adsl))
+    head(adsl[, cols], 10)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
