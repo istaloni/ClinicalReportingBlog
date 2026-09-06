@@ -1,0 +1,12 @@
+---
+title: "About"
+
+about:
+  template: jolla
+  links:
+    - icon: github
+      text: Github
+      href: https://github.com/istaloni
+---
+
+Welcome to my Clinical Reporting Blog! Here I share insights, R tools, and data visualizations focused on clinical trial data and pharmaverse technologies.
