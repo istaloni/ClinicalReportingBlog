@@ -1,0 +1,61 @@
+---
+title: "Interactive Clinical Data Explorer"
+author: "Karl Marquez"
+date: "2026-09-06"
+categories: [Teal, R, Clinical]
+---
+
+Below is an interactive clinical data explorer running directly in your browser via WebAssembly (Shinylive):
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 650
+
+library(shiny)
+
+# 1. UI Definition
+ui <- fluidPage(
+  theme = bslib::bs_theme(bootswatch = "flatly"),
+  titlePanel("CDISC ADSL Variable Explorer"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("variable", "Select Demographic Metric:", 
+                  choices = c("Age" = "AGE", "Baseline Height (cm)" = "HEIGHT", "Baseline Weight (kg)" = "WEIGHT")),
+      sliderInput("bins", "Histogram Bins:", min = 5, max = 25, value = 12),
+      checkboxInput("show_table", "Show Raw Data Table", value = TRUE)
+    ),
+    mainPanel(
+      plotOutput("distPlot"),
+      hr(),
+      conditionalPanel(
+        condition = "input.show_table == true",
+        tableOutput("dataTable")
+      )
+    )
+  )
+)
+
+# 2. Server Definition
+server <- function(input, output, session) {
+  # Synthetic ADSL Patient Data
+  set.seed(42)
+  adsl <- data.frame(
+    USUBJID = paste0("PAT-", 101:120),
+    AGE = round(rnorm(20, mean = 58, sd = 8)),
+    HEIGHT = round(rnorm(20, mean = 168, sd = 10), 1),
+    WEIGHT = round(rnorm(20, mean = 74, sd = 12), 1)
+  )
+
+  output$distPlot <- renderPlot({
+    val <- adsl[[input$variable]]
+    hist(val, breaks = input$bins, col = "#2c3e50", border = "white",
+         xlab = input$variable, main = paste("Distribution of", input$variable))
+  })
+
+  output$dataTable <- renderTable({
+    head(adsl[, c("USUBJID", input$variable)], 8)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
