@@ -1,0 +1,84 @@
+---
+title: "DemographicsTable"
+author: "Karl Marquez"
+date: "2026-09-07"
+categories: [CDISC, TLG, Demographics]
+format: html
+page-layout: full
+---
+
+```{r}
+#| message: false
+#| warning: false
+#| code-fold: true
+#| code-summary: "Show Setup Code"
+
+
+# 1. Define required packages
+packages <- c("tidyverse", "dplyr", "lubridate", "plotly",
+              "ggstatsplot", "corrplot", "Hmisc", "flextable", "DT",
+              "ggrepel", "ggforce", "ggpubr", "tern")
+
+# 2. Check and install missing packages with an explicit CRAN mirror
+missing_packages <- packages[!packages %in% rownames(installed.packages())]
+if (length(missing_packages) > 0) {
+  install.packages(missing_packages, repos = "[https://cloud.r-project.org](https://cloud.r-project.org)")
+}
+
+# 3. Load all libraries quietly
+invisible(lapply(packages, library, character.only = TRUE))
+```
+
+# Load ADSL dataset
+```{r}
+#| message: false
+#| warning: false
+#| code-fold: true
+#| code-summary: "Show Setup Code"
+
+adsl_df <- read.csv("adsl.csv", stringsAsFactors = FALSE)
+#colnames(adsl_df)
+#View(adsl_df)
+#colnames(adsl)
+adsl <- adsl_df %>% 
+  mutate(
+    SEX = factor(case_when(
+      SEX == "M" ~ "Male",
+      SEX == "F" ~ "Female"
+    )),
+    AGEGR1 = factor(case_when(
+      between(AGE, 18, 40) ~ "18-40",
+      between(AGE, 41, 64) ~ "41-64",
+      AGE > 64 ~ ">=65"
+    ))
+  )
+
+```
+
+# Table
+```{r}
+#| message: false
+#| warning: false
+#| code-fold: true
+#| code-summary: "Show Setup Code"
+
+vars <- c("AGE", "AGEGR1", "SEX", "ETHNIC", "RACE")
+vars.label <- c(
+  "Age (yr)", "Age Group", "Sex", "Ethnicity", "Race"
+)
+
+result <- basic_table(show_colcounts = TRUE) %>% 
+  split_cols_by(var = "ACTARM") %>% 
+  add_overall_col("All patients") %>% 
+  analyze_vars(
+    vars = vars,
+    vars_label = vars.label
+  ) %>% 
+  build_table(adsl)
+result
+
+
+```
+
+
+

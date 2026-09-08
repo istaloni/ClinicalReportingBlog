@@ -15,6 +15,7 @@ website:
       - icon: github
         href: https://github.com/istaloni/ClinicalReportingBlog
   back-to-top-navigation: true
+  page-footer: "Karl Marquez"
 
 format:
   html:
