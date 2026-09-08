@@ -3,8 +3,9 @@ project:
   output-dir: docs
 
 website:
-  title: "Clinical Reporting Blog"
+  title: "Cell Therapy Clinical Trials"
   navbar:
+    search: true
     left:
       - href: index.qmd
         text: Home
@@ -13,9 +14,12 @@ website:
     right:
       - icon: github
         href: https://github.com/istaloni/ClinicalReportingBlog
+  back-to-top-navigation: true
 
 format:
   html:
-    theme: cosmo
+    theme: sandstone
+    #css: styles.css
+    toc: true
     filters: 
       - shinylive

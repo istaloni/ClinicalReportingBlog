@@ -1,5 +1,5 @@
 ---
-title: "ClinicalReporting"
+title: "Clinical Trial Reports"
 listing: 
   contents: posts
   sort: "date desc"
@@ -7,4 +7,3 @@ listing:
 format: html
 editor: visual
 ---
-

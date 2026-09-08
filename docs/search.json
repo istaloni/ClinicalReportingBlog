@@ -23,23 +23,23 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "ClinicalReporting",
+    "title": "Clinical Trial Reports",
     "section": "",
-    "text": "Interactive Clinical Data Explorer\n\n\n\n\n\n\n\n\nSep 6, 2026\n\n\nKarl Marquez\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction to Clinical Reporting\n\n\n\n\n\n\n\n\nSep 6, 2026\n\n\nKarl Marquez\n\n\n\n\n\n\n\n\n\n\n\n\nInteractive ADSL Clinical Explorer\n\n\n\n\n\n\n\n\nSep 6, 2026\n\n\nKarl Marquez\n\n\n\n\n\nNo matching items"
+    "text": "Interactive Clinical Data Explorer\n\n\n\n\n\n\n\n\nSep 6, 2026\n\n\nKarl Marquez\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction to Clinical Reporting\n\n\n\n\n\n\n\n\nSep 6, 2026\n\n\nKarl Marquez\n\n\n\n\n\n\n\n\n\n\n\n\nInteractive ADSL Clinical Explorer\n\n\n\n\n\n\n\n\nSep 6, 2026\n\n\nKarl Marquez\n\n\n\n\n\nNo matching items\n Back to top"
   },
   {
     "objectID": "posts/firstpost/firstpost.html",
     "href": "posts/firstpost/firstpost.html",
     "title": "Introduction to Clinical Reporting",
     "section": "",
-    "text": "Welcome to my clinical reporting blog! In this post, I will explore clinical data transformation and reporting using R."
+    "text": "Welcome to my clinical reporting blog! In this post, I will explore clinical data transformation and reporting using R.\n\n\n\n Back to top"
   },
   {
     "objectID": "posts/first-teal/index.html",
     "href": "posts/first-teal/index.html",
     "title": "Interactive Clinical Data Explorer",
     "section": "",
-    "text": "Below is an interactive clinical data explorer running directly in your browser via WebAssembly (Shinylive):\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| viewerHeight: 650\n#| viewerWidth: 100%\n\nlibrary(shiny)\n\n# 1. UI Definition\nui &lt;- fluidPage(\n  theme = bslib::bs_theme(bootswatch = \"flatly\"),\n  titlePanel(\"CDISC ADSL Variable Explorer\"),\n  sidebarLayout(\n    sidebarPanel(\n      selectInput(\"variable\", \"Select Demographic Metric:\", \n                  choices = c(\"Age\" = \"AGE\", \"Baseline Height (cm)\" = \"HEIGHT\", \"Baseline Weight (kg)\" = \"WEIGHT\")),\n      sliderInput(\"bins\", \"Histogram Bins:\", min = 5, max = 25, value = 12),\n      checkboxInput(\"show_table\", \"Show Raw Data Table\", value = TRUE)\n    ),\n    mainPanel(\n      plotOutput(\"distPlot\"),\n      hr(),\n      conditionalPanel(\n        condition = \"input.show_table == true\",\n        tableOutput(\"dataTable\")\n      )\n    )\n  )\n)\n\n# 2. Server Definition\nserver &lt;- function(input, output, session) {\n  # Synthetic ADSL Patient Data\n  set.seed(42)\n  adsl &lt;- data.frame(\n    USUBJID = paste0(\"PAT-\", 101:120),\n    AGE = round(rnorm(20, mean = 58, sd = 8)),\n    HEIGHT = round(rnorm(20, mean = 168, sd = 10), 1),\n    WEIGHT = round(rnorm(20, mean = 74, sd = 12), 1)\n  )\n\n  output$distPlot &lt;- renderPlot({\n    val &lt;- adsl[[input$variable]]\n    hist(val, breaks = input$bins, col = \"#2c3e50\", border = \"white\",\n         xlab = input$variable, main = paste(\"Distribution of\", input$variable))\n  })\n\n  output$dataTable &lt;- renderTable({\n    head(adsl[, c(\"USUBJID\", input$variable)], 8)\n  })\n}\n\nshinyApp(ui = ui, server = server)"
+    "text": "Below is an interactive clinical data explorer running directly in your browser via WebAssembly (Shinylive):\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| viewerHeight: 650\n#| viewerWidth: 100%\n\nlibrary(shiny)\n\n# 1. UI Definition\nui &lt;- fluidPage(\n  theme = bslib::bs_theme(bootswatch = \"flatly\"),\n  titlePanel(\"CDISC ADSL Variable Explorer\"),\n  sidebarLayout(\n    sidebarPanel(\n      selectInput(\"variable\", \"Select Demographic Metric:\", \n                  choices = c(\"Age\" = \"AGE\", \"Baseline Height (cm)\" = \"HEIGHT\", \"Baseline Weight (kg)\" = \"WEIGHT\")),\n      sliderInput(\"bins\", \"Histogram Bins:\", min = 5, max = 25, value = 12),\n      checkboxInput(\"show_table\", \"Show Raw Data Table\", value = TRUE)\n    ),\n    mainPanel(\n      plotOutput(\"distPlot\"),\n      hr(),\n      conditionalPanel(\n        condition = \"input.show_table == true\",\n        tableOutput(\"dataTable\")\n      )\n    )\n  )\n)\n\n# 2. Server Definition\nserver &lt;- function(input, output, session) {\n  # Synthetic ADSL Patient Data\n  set.seed(42)\n  adsl &lt;- data.frame(\n    USUBJID = paste0(\"PAT-\", 101:120),\n    AGE = round(rnorm(20, mean = 58, sd = 8)),\n    HEIGHT = round(rnorm(20, mean = 168, sd = 10), 1),\n    WEIGHT = round(rnorm(20, mean = 74, sd = 12), 1)\n  )\n\n  output$distPlot &lt;- renderPlot({\n    val &lt;- adsl[[input$variable]]\n    hist(val, breaks = input$bins, col = \"#2c3e50\", border = \"white\",\n         xlab = input$variable, main = paste(\"Distribution of\", input$variable))\n  })\n\n  output$dataTable &lt;- renderTable({\n    head(adsl[, c(\"USUBJID\", input$variable)], 8)\n  })\n}\n\nshinyApp(ui = ui, server = server)\n\n\n\n Back to top"
   },
   {
     "objectID": "firstpost.html",
@@ -53,13 +53,13 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "Welcome to my Clinical Reporting Blog! Here I share insights, R tools, and data visualizations focused on clinical trial data and pharmaverse technologies."
+    "text": "Welcome to my Clinical Reporting Blog! Here I share insights, R tools, and data visualizations focused on clinical trial data and pharmaverse technologies.\n\n\n Back to top"
   },
   {
     "objectID": "posts/ADSL/index.html",
     "href": "posts/ADSL/index.html",
     "title": "Interactive ADSL Clinical Explorer",
     "section": "",
-    "text": "Below is an interactive clinical data explorer fetching your pushed adsl.csv dataset directly from GitHub via WebAssembly (Shinylive):"
+    "text": "Below is an interactive clinical data explorer fetching your pushed adsl.csv dataset directly from GitHub via WebAssembly (Shinylive):\n\n\n\n\n\n Back to top"
   }
 ]
