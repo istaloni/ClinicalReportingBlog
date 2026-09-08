@@ -7,6 +7,9 @@ format: html
 page-layout: full
 ---
 
+This code describes how to generate a basic demographics table from an oncology clinical trial using a random dataset generator to analyze ADSL.
+
+# Load packages
 ```{r}
 #| message: false
 #| warning: false
@@ -29,7 +32,7 @@ if (length(missing_packages) > 0) {
 invisible(lapply(packages, library, character.only = TRUE))
 ```
 
-# Load ADSL dataset
+# Load and format ADSL dataset
 ```{r}
 #| message: false
 #| warning: false
@@ -55,7 +58,24 @@ adsl <- adsl_df %>%
 
 ```
 
-# Table
+# View table
+## This ADSL dataset was generated from CDISC generator website (cdiscdataset.com) 
+```{r}
+#| message: false
+#| warning: false
+#| code-fold: true
+#| code-summary: "Show Setup Code"
+adsl.table <- adsl %>% 
+  datatable(
+    filter = list(position = "top", clear = FALSE),
+    options = list(columnDefs = list(list(className = "dt_center", targets = "_all")),
+                   scrollX = TRUE),
+          caption = "ADSL from CDISC Generator"
+        )
+adsl.table
+```
+
+# Demographics Table
 ```{r}
 #| message: false
 #| warning: false
