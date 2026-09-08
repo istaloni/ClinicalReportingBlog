@@ -75,7 +75,8 @@ adsl.table <- adsl %>%
 adsl.table
 ```
 
-# Demographics Table
+# Demographics Table 
+## rtables
 ```{r}
 #| message: false
 #| warning: false
@@ -100,5 +101,20 @@ result
 
 ```
 
+## flextable
+```{r}
+#| message: false
+#| warning: false
+#| code-fold: true
+#| code-summary: "Show Setup Code"
+
+flextable.demographics <- as_flextable(result)
+flextable.demographics <- flextable.demographics %>%
+  theme_booktabs() %>% 
+  autofit()
+flextable.demographics
+
+
+```
 
 
