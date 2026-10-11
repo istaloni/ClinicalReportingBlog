@@ -1,0 +1,47 @@
+---
+title: "Kaplan Meier Curve Data Preparation"
+author: "Karl Marquez"
+date: "2026-10-11"
+categories: [ADAM, CDISC]
+format: html
+---
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+#| code-fold: true
+
+library(dplyr)
+library(safetyData)
+library(DT)
+
+```
+
+::: {.callout-note}
+## The data
+We will use the **CDISC Pilot study (CDISCPILOT01)**, a public mock Alzheimer's trial of xanomeline patches vs. placebo. It ships as R data frames in the [`{safetyData}`](https://github.com/SafetyGraphics/safetyData) package, so anyone can reproduce this post.
+
+The endpoint is **Time to First Dermatologic Event** (skin reactions at the patch site). The [R Consortium submitted this same KM figure to the FDA](https://github.com/RConsortium/submissions-pilot3-adam-to-fda) in its R-based Submission Pilot 3, and the ADaM data behind it was built with `{admiral}`. So this isn't a toy example.
+
+:::
+
+# ADAM Dataset: ADTTE 
+
+## Analaysis Dataset for Time-To-Event
+To build a kaplan-meier curve, we need two ADAM datasets: ADSL and ADAE. Visually, ADTTE looks like this:
+
+```{r}
+#| message: false
+#| warning: false
+#| code-fold: true
+
+
+adtte <- safetyData::adam_adtte %>% 
+  datatable()
+adtte
+
+
+```
+
+

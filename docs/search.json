@@ -25,7 +25,7 @@
     "href": "index.html",
     "title": "Clinical Trial Reports",
     "section": "",
-    "text": "DemographicsTable\n\n\n\n\n\n\n\n\nSep 7, 2026\n\n\nKarl Marquez\n\n\n\n\n\n\n\n\n\n\n\n\nInteractive Clinical Data Explorer\n\n\n\n\n\n\n\n\nSep 6, 2026\n\n\nKarl Marquez\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction to Clinical Reporting\n\n\n\n\n\n\n\n\nSep 6, 2026\n\n\nKarl Marquez\n\n\n\n\n\n\n\n\n\n\n\n\nInteractive ADSL Clinical Explorer\n\n\n\n\n\n\n\n\nSep 6, 2026\n\n\nKarl Marquez\n\n\n\n\n\nNo matching items\n Back to top"
+    "text": "Kaplan Meier Curve Data Preparation\n\n\n\n\n\n\n\n\nOct 11, 2026\n\n\nKarl Marquez\n\n\n\n\n\n\n\n\n\n\n\n\nDemographicsTable\n\n\n\n\n\n\n\n\nSep 7, 2026\n\n\nKarl Marquez\n\n\n\n\n\n\n\n\n\n\n\n\nInteractive Clinical Data Explorer\n\n\n\n\n\n\n\n\nSep 6, 2026\n\n\nKarl Marquez\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction to Clinical Reporting\n\n\n\n\n\n\n\n\nSep 6, 2026\n\n\nKarl Marquez\n\n\n\n\n\n\n\n\n\n\n\n\nInteractive ADSL Clinical Explorer\n\n\n\n\n\n\n\n\nSep 6, 2026\n\n\nKarl Marquez\n\n\n\n\n\nNo matching items\n Back to top"
   },
   {
     "objectID": "posts/firstpost/firstpost.html",
@@ -89,5 +89,19 @@
     "title": "DemographicsTable",
     "section": "flextable",
     "text": "flextable\n\n\nShow Setup Code\nflextable.demographics &lt;- as_flextable(result)\nflextable.demographics &lt;- flextable.demographics %&gt;%\n  theme_booktabs() %&gt;% \n  autofit()\nflextable.demographics\n\n\nTreatment 3Treatment 2Treatment 1All patients(N=37)(N=30)(N=33)(N=100)AGEn373033100Mean (SD)55.8 (16.3)46.5 (18.4)46.2 (21.1)49.8 (19.0)Median52.048.542.049.0Min - Max26.0 - 80.021.0 - 79.018.0 - 79.018.0 - 80.0AGEGR1n373033100&gt;=6512 (32.4%)5 (16.7%)9 (27.3%)26 (26%)18-406 (16.2%)12 (40%)14 (42.4%)32 (32%)41-6419 (51.4%)13 (43.3%)10 (30.3%)42 (42%)SEXn373033100Female21 (56.8%)15 (50%)17 (51.5%)53 (53%)Male16 (43.2%)15 (50%)16 (48.5%)47 (47%)ETHNICn373033100HISPANIC OR LATINO22 (59.5%)11 (36.7%)11 (33.3%)44 (44%)NOT HISPANIC OR LATINO15 (40.5%)19 (63.3%)22 (66.7%)56 (56%)RACEn373033100AMERICAN INDIAN OR ALASKA NATIVE5 (13.5%)4 (13.3%)6 (18.2%)15 (15%)ASIAN11 (29.7%)10 (33.3%)8 (24.2%)29 (29%)BLACK OR AFRICAN AMERICAN8 (21.6%)6 (20%)8 (24.2%)22 (22%)OTHER9 (24.3%)4 (13.3%)6 (18.2%)19 (19%)WHITE4 (10.8%)6 (20%)5 (15.2%)15 (15%)"
+  },
+  {
+    "objectID": "posts/KM Curve ADAM data set/KMCurveData.html",
+    "href": "posts/KM Curve ADAM data set/KMCurveData.html",
+    "title": "Kaplan Meier Curve Data Preparation",
+    "section": "",
+    "text": "Code\nlibrary(dplyr)\nlibrary(safetyData)\nlibrary(DT)"
+  },
+  {
+    "objectID": "posts/KM Curve ADAM data set/KMCurveData.html#analaysis-dataset-for-time-to-event",
+    "href": "posts/KM Curve ADAM data set/KMCurveData.html#analaysis-dataset-for-time-to-event",
+    "title": "Kaplan Meier Curve Data Preparation",
+    "section": "Analaysis Dataset for Time-To-Event",
+    "text": "Analaysis Dataset for Time-To-Event\nTo build a kaplan-meier curve, we need two ADAM datasets: ADSL and ADAE. Visually, ADTTE looks like this:\n\n\nCode\nadtte &lt;- safetyData::adam_adtte %&gt;% \n  datatable()\nadtte"
   }
 ]

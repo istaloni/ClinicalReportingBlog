@@ -4,3 +4,7 @@
 .Ruserdata
 
 /.quarto/
+
+# stray output from previewing single .qmd files outside the site
+*_files/
+!docs/**/*_files/
