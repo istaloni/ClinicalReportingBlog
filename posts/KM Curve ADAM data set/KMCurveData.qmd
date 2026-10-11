@@ -46,7 +46,16 @@ To build a kaplan-meier curve, we need two ADAM datasets: ADSL and ADAE. Visuall
 
 
 adtte <- safetyData::adam_adtte %>% 
-  datatable()
+  datatable(
+    class = "compact nowrap stripe hover",
+    rownames = FALSE,
+    filter = "top",
+    options = list(
+      scrollX = TRUE,
+      pagelength = 10,
+      autoWidth = TRUE
+    )
+  )
 adtte
 
 

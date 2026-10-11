@@ -102,6 +102,6 @@
     "href": "posts/KM Curve ADAM data set/KMCurveData.html#analaysis-dataset-for-time-to-event",
     "title": "Kaplan Meier Curve Data Preparation",
     "section": "Analaysis Dataset for Time-To-Event",
-    "text": "Analaysis Dataset for Time-To-Event\nTo build a kaplan-meier curve, we need two ADAM datasets: ADSL and ADAE. Visually, ADTTE looks like this:\n\n\nCode\nadtte &lt;- safetyData::adam_adtte %&gt;% \n  datatable()\nadtte"
+    "text": "Analaysis Dataset for Time-To-Event\nTo build a kaplan-meier curve, we need two ADAM datasets: ADSL and ADAE. Visually, ADTTE looks like this:\n\n\nCode\nadtte &lt;- safetyData::adam_adtte %&gt;% \n  datatable(\n    class = \"compact nowrap stripe hover\",\n    rownames = FALSE,\n    filter = \"top\",\n    options = list(\n      scrollX = TRUE,\n      pagelength = 10,\n      autoWidth = TRUE\n    )\n  )\nadtte"
   }
 ]
