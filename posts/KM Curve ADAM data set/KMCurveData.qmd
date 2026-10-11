@@ -3,7 +3,15 @@ title: "Kaplan Meier Curve Data Preparation"
 author: "Karl Marquez"
 date: "2026-10-11"
 categories: [ADAM, CDISC]
-format: html
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-tools: true
+page-layout: full
+execute: 
+  message: false
+  warning: false
 ---
 
 ```{r}
