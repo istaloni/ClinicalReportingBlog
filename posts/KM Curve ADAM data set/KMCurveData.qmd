@@ -36,8 +36,8 @@ The endpoint is **Time to First Dermatologic Event** (skin reactions at the patc
 
 # ADAM Dataset: ADTTE 
 
-## Analaysis Dataset for Time-To-Event
-To build a kaplan-meier curve, we need two ADAM datasets: ADSL and ADAE. Visually, ADTTE looks like this:
+## Analysis Dataset for Time-To-Event
+To build a Kaplan-Meier curve we need one ADaM dataset, ADTTE, which is derived from ADSL and ADAE. Visually, ADTTE looks like this:
 
 ```{r}
 #| message: false
@@ -57,8 +57,38 @@ adtte <- safetyData::adam_adtte %>%
     )
   )
 adtte
-
-
 ```
+
+## ADTTE column descriptions
+
+| Variable | Name | In this study |
+|-------------------|-------------------|----------------------------------|
+| `STUDYID` | Study Identifier | Always `CDISCPILOT01`; identifies the trial |
+| `SITEID` | Study Site Identifier | Which of the 17 clinical sites enrolled the patient (`701`–`718`) |
+| `USUBJID` | Unique Subject Identifier | The patient key (e.g., `01-701-1015`) that links ADTTE to every other dataset; 254 patients, one row each |
+| `AGE` | Age | Age in years at baseline (51–89) |
+| `AGEGR1` | Pooled Age Group 1 | Age category: `<65`, `65-80`, `>80` |
+| `AGEGR1N` | Pooled Age Group 1 (N) | Numeric code for `AGEGR1` (`1`, `2`, `3`), used for sorting |
+| `RACE` | Race | `WHITE`, `BLACK OR AFRICAN AMERICAN`, `AMERICAN INDIAN OR ALASKA NATIVE` |
+| `RACEN` | Race (N) | Numeric code for `RACE`, used for sorting |
+| `SEX` | Sex | `F` or `M` |
+| `TRTSDT` | Date of First Exposure to Treatment | First dose date; copied from ADSL |
+| `TRTEDT` | Date of Last Exposure to Treatment | Last dose date; copied from ADSL |
+| `TRTDUR` | Duration of Treatment (days) | Days on treatment, from `TRTSDT` to `TRTEDT` (1–212) |
+| `TRTP` | Planned Treatment | The arm the patient was assigned to |
+| `TRTA` | Actual Treatment | The arm the patient actually received; the grouping variable for the KM curves |
+| `TRTAN` | Actual Treatment (N) | Numeric code for `TRTA`: `0` = Placebo, `54` = Low Dose, `81` = High Dose (the daily dose in mg) |
+| `PARAM` | Parameter Description | `Time to First Dermatologic Event`; the full name of the endpoint |
+| `PARAMCD` | Parameter Code | `TTDE`, so we filter to the endpoint we want |
+| `AVAL` | Analysis Value | Number of days from `STARTDT` to `ADT`, counting the start day as Day 1; the x-axis of the KM curve |
+| `STARTDT` | Time-to-Event Origin Date | Day 1 of the clock; here it's the first dose date (`TRTSDT`) |
+| `ADT` | Analysis Date | The date the clock stopped, either the event date or the censoring date |
+| `CNSR` | Censor | `0` = had a dermatologic event, `1` = censored |
+| `EVNTDESC` | Event or Censoring Description | Why the clock stopped: `Dematologic Event Occured` (typo is in the original data) or `Study Completion Date` |
+| `SRCDOM` | Source Domain | Which dataset `ADT` came from: `ADAE` for events, `ADSL` for censored patients |
+| `SRCVAR` | Source Variable | Which column `ADT` came from: `ASTDT` (AE start date) or `RFENDT` (end-of-study date) |
+| `SRCSEQ` | Source Sequence Number | Which row in ADAE the event came from (matches `AESEQ`); blank for censored patients |
+| `SAFFL` | Safety Population Flag | `Y` = received at least one dose; all 254 patients are in the safety population |
+
 
 
